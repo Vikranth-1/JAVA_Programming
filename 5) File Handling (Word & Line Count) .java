@@ -1,20 +1,32 @@
-import java.io.*;
+import java.io.File;
+import java.util.Scanner;
 
-class FileCount {
-    public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new FileReader("test.txt"));
-        String line;
-        int lines = 0, words = 0;
+public class WordLineCount {
+    public static void main(String[] args) {
+        try {
+            File file = new File("sample.txt");
+            Scanner sc = new Scanner(file);
 
-        while ((line = br.readLine()) != null) {
-            lines++;
-            String[] w = line.split("\\s+");
-            words += w.length;
+            int lineCount = 0;
+            int wordCount = 0;
+
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                lineCount++;
+
+                if (!line.trim().isEmpty()) {
+                    String[] words = line.trim().split("\\s+");
+                    wordCount += words.length;
+                }
+            }
+
+            sc.close();
+
+            System.out.println("Number of lines: " + lineCount);
+            System.out.println("Number of words: " + wordCount);
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
         }
-
-        br.close();
-
-        System.out.println("Lines: " + lines);
-        System.out.println("Words: " + words);
     }
 }
